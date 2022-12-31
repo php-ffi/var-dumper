@@ -24,6 +24,22 @@ final class FFICasterTestCase extends TestCase
         }
     }
 
+    private function getDefaultAbi(): string
+    {
+        if (\PHP_OS_FAMILY !== 'Windows') {
+            return '[fastcall]';
+        }
+
+        return \PHP_INT_SIZE === 8 ? '[cdecl]' : '[pascal]';
+    }
+
+    private function getLongType(): string
+    {
+        $longSize = \FFI::type('long')->getSize();
+
+        return 8 === $longSize ? 'int64_t' : 'int32_t';
+    }
+
     public function testCastAnonymousStruct()
     {
         $this->assertDumpEquals(<<<'PHP'
@@ -113,7 +129,7 @@ final class FFICasterTestCase extends TestCase
 
     public function testCastVoidFunction()
     {
-        $abi = \PHP_OS_FAMILY === 'Windows' ? '[cdecl]' : '[fastcall]';
+        $abi = $this->getDefaultAbi();
 
         $this->assertDumpEquals(<<<PHP
         $abi callable(): void {
@@ -124,7 +140,7 @@ final class FFICasterTestCase extends TestCase
 
     public function testCastIntFunction()
     {
-        $abi = \PHP_OS_FAMILY === 'Windows' ? '[cdecl]' : '[fastcall]';
+        $abi = $this->getDefaultAbi();
 
         $this->assertDumpEquals(<<<PHP
         $abi callable(): uint64_t {
@@ -135,7 +151,7 @@ final class FFICasterTestCase extends TestCase
 
     public function testCastFunctionWithArguments()
     {
-        $abi = \PHP_OS_FAMILY === 'Windows' ? '[cdecl]' : '[fastcall]';
+        $abi = $this->getDefaultAbi();
 
         $this->assertDumpEquals(<<<PHP
         $abi callable(int32_t, char*): void {
@@ -244,16 +260,17 @@ final class FFICasterTestCase extends TestCase
             void* a;
             int32_t b;
             char* c;
-            ptrdiff_t d;
+            long d;
         } Event;
         CPP);
 
-        $this->assertDumpEquals(<<<'OUTPUT'
+        $long = $this->getLongType();
+        $this->assertDumpEquals(<<<OUTPUT
         union Event {
           a<void*>: null
           b<int32_t>: 0
           c<char*>: null
-          d<int64_t>: 0
+          d<$long>: 0
         }
         OUTPUT, $ffi->new('Event'));
     }
@@ -408,10 +425,8 @@ final class FFICasterTestCase extends TestCase
         $var = $ffi->new('Example');
         $var->func = (static fn (object $p) => 42);
 
-        $abi = \PHP_OS_FAMILY === 'Windows' ? '[cdecl]' : '[fastcall]';
-        $longSize = \FFI::type('long')->getSize();
-        $longType = 8 === $longSize ? 'int64_t' : 'int32_t';
-        $structSize = 56 + $longSize * 2;
+        $abi = $this->getDefaultAbi();
+        $long = $this->getLongType();
 
         $this->assertDumpEquals(<<<OUTPUT
         struct Example {
@@ -425,9 +440,9 @@ final class FFICasterTestCase extends TestCase
             6 => 0
             7 => 0
           ]
-          b<int32_t>: 0
+          b<$long>: 0
           c<int16_t>: 0
-          d<int32_t>: 0
+          d<$long>: 0
           point: struct <anonymous> {
             x<int32_t>: 0
             y<int32_t>: 0
@@ -435,7 +450,7 @@ final class FFICasterTestCase extends TestCase
           e<float>: 0.0
           f<int16_t>: 0
           g<bool>: false
-          func<int32_t(*)()>: [cdecl] callable(struct __sub*): int32_t {
+          func<int32_t(*)()>: $abi callable(struct __sub*): int32_t {
             returnType: FFI\CType<int32_t> {}
           }
         }
