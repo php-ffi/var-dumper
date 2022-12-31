@@ -1,5 +1,16 @@
 # VarDumper Extension For FFI Types
 
+<p align="center">
+    <a href="https://packagist.org/packages/ffi/var-dumper"><img src="http://poser.pugx.org/ffi/var-dumper/require/php?style=for-the-badge" alt="PHP 8.1+"></a>
+    <a href="https://packagist.org/packages/ffi/var-dumper"><img src="https://poser.pugx.org/ffi/var-dumper/version?style=for-the-badge" alt="Latest Stable Version"></a>
+    <a href="https://packagist.org/packages/ffi/var-dumper"><img src="https://poser.pugx.org/ffi/var-dumper/v/unstable?style=for-the-badge" alt="Latest Unstable Version"></a>
+    <a href="https://packagist.org/packages/ffi/var-dumper"><img src="https://poser.pugx.org/ffi/var-dumper/downloads?style=for-the-badge" alt="Total Downloads"></a>
+    <a href="https://raw.githubusercontent.com/php-ffi/var-dumper/master/LICENSE.md"><img src="https://poser.pugx.org/ffi/var-dumper/license?style=for-the-badge" alt="License MIT"></a>
+</p>
+<p align="center">
+    <a href="https://github.com/php-ffi/var-dumper/actions"><img src="https://github.com/php-ffi/var-dumper/workflows/build/badge.svg"></a>
+</p>
+
 This library allows you to dump FFI types using the functions `dd()` and `dump()`.
 
 ## Requirements
