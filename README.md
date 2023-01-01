@@ -1,7 +1,7 @@
 # VarDumper Extension For FFI Types
 
 <p align="center">
-    <a href="https://packagist.org/packages/ffi/var-dumper"><img src="http://poser.pugx.org/ffi/var-dumper/require/php?style=for-the-badge" alt="PHP 8.1+"></a>
+    <a href="https://packagist.org/packages/ffi/var-dumper"><img src="https://poser.pugx.org/ffi/var-dumper/require/php?style=for-the-badge" alt="PHP 8.1+"></a>
     <a href="https://packagist.org/packages/ffi/var-dumper"><img src="https://poser.pugx.org/ffi/var-dumper/version?style=for-the-badge" alt="Latest Stable Version"></a>
     <a href="https://packagist.org/packages/ffi/var-dumper"><img src="https://poser.pugx.org/ffi/var-dumper/v/unstable?style=for-the-badge" alt="Latest Unstable Version"></a>
     <a href="https://packagist.org/packages/ffi/var-dumper"><img src="https://poser.pugx.org/ffi/var-dumper/downloads?style=for-the-badge" alt="Total Downloads"></a>

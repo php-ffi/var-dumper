@@ -1,9 +1,5 @@
 .idea/
 vendor/
 
-# Local testing
-include/
-test.php
-
 composer.lock
 .phpunit.result.cache
